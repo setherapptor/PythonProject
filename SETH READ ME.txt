@@ -1,0 +1,2 @@
+Webpage for tutorial:
+http://programarcadegames.com/index.php?lang=en&chapter=introduction_to_sprites
