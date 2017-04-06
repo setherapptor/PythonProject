@@ -1,5 +1,7 @@
 import pygame as p
 from game import Game
+from item import Item
+import color
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
@@ -18,7 +20,7 @@ def main():
   clock = p.time.Clock()
   
   game = Game()
-  
+
   while not done:
     done = game.handle_events()
     game.logic()

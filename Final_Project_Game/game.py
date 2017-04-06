@@ -5,7 +5,8 @@ import color
 class Game():
  
   def __init__(self):
-    pass
+      self.sprites = p.sprite.Group()
+      self.sprites.add(Item(pos = (400,300)))
 
   def handle_events(self):
     #event handling here
@@ -21,6 +22,8 @@ class Game():
 
   def draw_frame(self, screen):
     #Drawing goes here
-    screen.fill(color.RED)
-
+    screen.fill(color.WHITE)
+    
+    self.sprites.draw(screen)
+    
     p.display.flip()
