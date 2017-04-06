@@ -13,7 +13,7 @@ def main():
   display = p.display.set_mode(size)
   
   p.display.set_caption('Evan and Seth\'s Game!')
-  p.display.set_icon(p.image.load('icon.jpeg'))
+  p.display.set_icon(p.image.load('icon.png'))
   
   done = False
   

@@ -4,7 +4,7 @@ from item import Item
 class Block(Item):
 
   def __init__(self, pos=(0,0), moving=[0,0,0,0,0,0]):
-    super().__init__(pos=pos, img = [p.image.load('block.jpeg')])
+    super().__init__(pos=pos, img = [p.image.load('block.png')])
     self.moving = moving
     
   def update(self):
