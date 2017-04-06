@@ -12,6 +12,7 @@ class Game():
       self.sprites.add(Block(pos = (100,100),moving = (8,800,0,0,0,0)))
       self.sprites.add(Block(pos = (200,200),moving = (0,0,0,6,600,0)))
       self.sprites.add(Block(pos = (0,0),moving = (8,800,0,6,600,0)))
+      self.paused = False
       
   def handle_events(self):
     #event handling here
@@ -19,17 +20,20 @@ class Game():
       print(event)
       if event.type == p.QUIT:
         return True
+      if event.type == p.MOUSEBUTTONDOWN:
+        self.paused = not self.paused
     return False
 
   def logic(self):
     #Logic goes here
-    self.sprites.update()
-    pass
+    if self.paused == False:
+      self.sprites.update()
 
   def draw_frame(self, screen):
     #Drawing goes here
-    screen.fill(color.BLACK)
-    
-    self.sprites.draw(screen)
-    
-    p.display.flip()
+    if self.paused == False:
+      screen.fill(color.BLACK)
+      
+      self.sprites.draw(screen)
+      
+      p.display.flip()
