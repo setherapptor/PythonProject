@@ -3,8 +3,8 @@ from game import Game
 from item import Item
 import color
 
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
+SCREEN_WIDTH = 768
+SCREEN_HEIGHT = 576
 
 def main():
   p.init()
@@ -13,7 +13,7 @@ def main():
   display = p.display.set_mode(size)
   
   p.display.set_caption('Evan and Seth\'s Game!')
-  p.display.set_icon(p.image.load('icon.png'))
+  p.display.set_icon(p.image.load('Images\\icon.png'))
   
   done = False
   
