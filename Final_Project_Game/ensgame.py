@@ -2,14 +2,12 @@ import pygame as p
 from game import Game
 from item import Item
 import color
-
-SCREEN_WIDTH = 768
-SCREEN_HEIGHT = 576
+import constants
 
 def main():
   p.init()
   
-  size = [SCREEN_WIDTH, SCREEN_HEIGHT]
+  size = [constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT]
   display = p.display.set_mode(size)
   
   p.display.set_caption('Evan and Seth\'s Game!')
@@ -28,7 +26,7 @@ def main():
     
     clock.tick(60)
     
-  pygame.quit()
+  p.quit()
   
 if __name__ == '__main__':
   main()
