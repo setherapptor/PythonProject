@@ -3,23 +3,36 @@ from item import Item
 import constants
 
 class Player(Item):
+  #TODO: Make it that if inside a block before moving, move up until okay, may make stairs or slants possible
+
+
 
   def __init__(self, pos=(0,0)):
     self.images = [p.image.load("Images\\stand.png"),p.image.load("Images\\walk.png"),p.image.load("Images\\jump.png"),p.image.load("Images\\fall.png"),p.image.load("Images\\hurt.png"),p.image.load("Images\\dead.png")]#Load all images here
     super().__init__(pos=pos,img=p.image.load("Images\\stand.png"))
+    #action decay
     self.fallen = 0
     self.jump = 0
     self.shot = 0
     self.dead = 0
     self.hurt = 0
+    
+    #for movement
     self.xvel = 0
     self.yvel = 0
+    
+    #for some sprite calculations
     self.clock = 120
+    
+    #for collision testing
     self.blocks = None
-  
+    
+    #for walking
+    self.right = False
+    self.left = False
+    
   def update(self):
     self.rect.x += self.xvel
-    self.rect.y += self.yvel
     self.clock -= 1
     
     if self.clock <= 0:
@@ -27,33 +40,59 @@ class Player(Item):
     
     #Falling check
     if not self.grounded() and self.jump == 0:#IF not grounded and not mid jump
-      if(self.clock % 5 == 0 or self.yvel == 0):#Calculate gravity
+      if(self.clock % 3 == 0 or self.yvel == 0):#Calculate gravity
+        #self.move_y(dist=min(constants.TERMINAL_VELOCITY, self.yvel + 1))
         self.yvel = min(constants.TERMINAL_VELOCITY, self.yvel + 1)
     else:
       self.yvel = min(0, self.yvel)#If falling, stop. Else: keep going(up)
       if self.jump > 0:
         self.yvel = -constants.JUMP_SPEED
     
-    self.rect.y += self.yvel
-    #Add check for head collision
+    collided_y = self.move_y(self.yvel)
+    if collided_y:
+      #If collided on y, either 
+      self.jump = 0
+      self.yvel = 0
     
-    #Sprite Calculations (If multiple frames for a sprite, use % on the decay factor or on clock)
+    #Sprite Calculations and Decay(If multiple frames for a sprite, use % on the decay factor or on clock)
     if self.dead > 0:
       self.image = self.images[5]
       self.dead -= 1
-    elif self.jump > 0:
+    elif self.yvel < 0:
       self.image = self.images[2]
-      self.jump -= 1
+      self.jump = max(self.jump - 1, 0)
     elif self.yvel > 0:
       self.image = self.images[3]
-    elif not self.xvel == 0:
+    elif not self.xvel == 0 and self.grounded():
       self.image = self.images[1]
     else:
       self.image = self.images[0]
       
   
-  def move_x(self):
-  
+  def move_x(self, dist=1):
+    #return True on collsion, False otherwise
+    if not dist == 0:
+      tick = dist / abs(dist)
+      for i in range(abs(dist)):
+        self.rect.x += tick
+        collide_blocks = p.sprite.spritecollide(self, self.blocks, False)
+        if len(collide_blocks) > 0:
+          self.rect.x -= tick
+          return True
+      return False
+    
+  def move_y(self, dist=1):
+    #return True on collsion, False otherwise
+    if not dist == 0:
+      tick = dist / abs(dist)
+      for i in range(abs(dist)):
+        self.rect.y += tick
+        collide_blocks = p.sprite.spritecollide(self, self.blocks, False)
+        if len(collide_blocks) > 0:
+          self.rect.y -= tick
+          return True
+      return False
+    
   def jump_start(self):
     if self.grounded():
       self.jump = constants.JUMP_TIME
@@ -63,9 +102,9 @@ class Player(Item):
   
   def grounded(self):
     if not self.blocks == None:
-      self.rect.y += 2
+      self.rect.y += 1
       grounded_plats = p.sprite.spritecollide(self, self.blocks, False)
-      self.rect.y -= 2
+      self.rect.y -= 1
       if len(grounded_plats) > 0:
         return True
       else:

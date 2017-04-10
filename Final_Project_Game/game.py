@@ -25,14 +25,22 @@ class Game():
       print(event)
       if event.type == p.QUIT:
         return True
-      elif event.type == p.MOUSEBUTTONDOWN:
-        self.paused = not self.paused
       elif event.type == p.KEYDOWN:
         if event.key == p.K_SPACE:
           self.player.jump_start()
+        elif event.key == p.K_a or event.key == p.K_LEFT:
+          self.player.left = True
+        elif event.key == p.K_d or event.key == p.K_RIGHT:
+          self.player.right = True
+        elif event.key == p.K_ESCAPE:
+          self.paused = not self.paused
       elif event.type == p.KEYUP:
         if event.key == p.K_SPACE:
           self.player.jump_stop()
+        elif event.key == p.K_a or event.key == p.K_LEFT:
+          self.player.left = False
+        elif event.key == p.K_d or event.key == p.K_RIGHT:
+          self.player.right = False
       
     return False
 
