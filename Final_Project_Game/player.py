@@ -32,9 +32,9 @@ class Player(Item):
     self.left = False
     
   def update(self):
-    self.rect.x += self.xvel
-    self.clock -= 1
     
+    #Internal Clock Tick
+    self.clock -= 1
     if self.clock <= 0:
       self.clock = 120
     
@@ -47,18 +47,37 @@ class Player(Item):
       self.yvel = min(0, self.yvel)#If falling, stop. Else: keep going(up)
       if self.jump > 0:
         self.yvel = -constants.JUMP_SPEED
+        if self.jump == 1:
+          self.yvel = - (2 * constants.JUMP_SPEED) // 3
     
+    #Walking
+    if self.left and self.right:
+      self.xvel = self.xvel - self.sign(self.xvel)
+    elif self.right:
+      self.xvel = min(self.xvel + constants.WALK_ACCELERATION, constants.TOP_SPEED)
+    elif self.left:
+      self.xvel = max(self.xvel - constants.WALK_ACCELERATION, -constants.TOP_SPEED)
+    elif self.grounded():
+      self.xvel = self.xvel - self.sign(self.xvel)
+      
+    
+    #Move and Collision
     collided_y = self.move_y(self.yvel)
     if collided_y:
       #If collided on y, either 
-      self.jump = 0
-      self.yvel = 0
+      self.jump = 0 # if on top
+      self.yvel = 0 #either collision on top or bottom
+    
+    collided_x = self.move_x(self.xvel)
+    if collided_x:
+      #If collided on x, either 
+      self.xvel = 0
     
     #Sprite Calculations and Decay(If multiple frames for a sprite, use % on the decay factor or on clock)
     if self.dead > 0:
       self.image = self.images[5]
       self.dead -= 1
-    elif self.yvel < 0:
+    elif self.yvel < 0 or self.jump > 0:
       self.image = self.images[2]
       self.jump = max(self.jump - 1, 0)
     elif self.yvel > 0:
@@ -72,7 +91,7 @@ class Player(Item):
   def move_x(self, dist=1):
     #return True on collsion, False otherwise
     if not dist == 0:
-      tick = dist / abs(dist)
+      tick = self.sign(dist)
       for i in range(abs(dist)):
         self.rect.x += tick
         collide_blocks = p.sprite.spritecollide(self, self.blocks, False)
@@ -84,7 +103,7 @@ class Player(Item):
   def move_y(self, dist=1):
     #return True on collsion, False otherwise
     if not dist == 0:
-      tick = dist / abs(dist)
+      tick = self.sign(dist)
       for i in range(abs(dist)):
         self.rect.y += tick
         collide_blocks = p.sprite.spritecollide(self, self.blocks, False)
@@ -98,7 +117,7 @@ class Player(Item):
       self.jump = constants.JUMP_TIME
       
   def jump_stop(self):
-    self.jump = 0
+    self.jump = min(self.jump, 1)
   
   def grounded(self):
     if not self.blocks == None:
@@ -111,6 +130,12 @@ class Player(Item):
         return False
     else:
       return False
+      
+      
+  def sign(self, num):# For Various math
+    if num == 0 or num == None:
+      return 0
+    return num//abs(num)
   
   
     

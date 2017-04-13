@@ -14,10 +14,13 @@ class Game():
       self.blocks.add(Item(pos = (400,300)))
       self.blocks.add(Block(pos = (400,300)))
       self.blocks.add(Block(pos = (0, 500)))
+      self.blocks.add(Block(pos = (64, 436)))
       self.blocks.add(Block(pos = (100,100),moving = (4,800,0,0,0,0)))
       self.blocks.add(Block(pos = (200,200),moving = (0,0,0,3,600,0)))
       self.blocks.add(Block(pos = (0,0),moving = (4,800,0,3,600,0)))
       self.paused = False
+      for block in self.blocks:
+        block.followers = self.sprites
       
   def handle_events(self):
     #event handling here
@@ -46,6 +49,12 @@ class Game():
 
   def logic(self):
     #Logic goes here
+    if self.player.rect.x > 768:
+      self.player.rect.x = 0
+    if self.player.rect.x < 0:
+      self.player.rect.x = 768
+    if self.player.rect.y > 578:
+      self.player.rect.y = 0
     if self.paused == False:
       self.player.blocks = self.blocks # Get player from list first
       self.sprites.update()
