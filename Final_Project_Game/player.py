@@ -16,28 +16,28 @@ class Player(Item):
     self.shot = 0
     self.dead = 0
     self.hurt = 0
-    
+
     #for movement
     self.xvel = 0
     self.yvel = 0
-    
+
     #for some sprite calculations
     self.clock = 120
-    
+
     #for collision testing
     self.blocks = None
-    
+
     #for walking
     self.right = False
     self.left = False
-    
+
   def update(self):
-    
+
     #Internal Clock Tick
     self.clock -= 1
     if self.clock <= 0:
       self.clock = 120
-    
+
     #Falling check
     if not self.grounded() and self.jump == 0:#IF not grounded and not mid jump
       if(self.clock % 3 == 0 or self.yvel == 0):#Calculate gravity
@@ -49,7 +49,7 @@ class Player(Item):
         self.yvel = -constants.JUMP_SPEED
         if self.jump == 1:
           self.yvel = - (2 * constants.JUMP_SPEED) // 3
-    
+
     #Walking
     if self.left and self.right:
       self.xvel = self.xvel - self.sign(self.xvel)
@@ -59,20 +59,20 @@ class Player(Item):
       self.xvel = max(self.xvel - constants.WALK_ACCELERATION, -constants.TOP_SPEED)
     elif self.grounded():
       self.xvel = self.xvel - self.sign(self.xvel)
-      
-    
+
+
     #Move and Collision
     collided_y = self.move_y(self.yvel)
     if collided_y:
-      #If collided on y, either 
+      #If collided on y, either
       self.jump = 0 # if on top
       self.yvel = 0 #either collision on top or bottom
-    
+
     collided_x = self.move_x(self.xvel)
     if collided_x:
-      #If collided on x, either 
+      #If collided on x, either
       self.xvel = 0
-    
+
     #Sprite Calculations and Decay(If multiple frames for a sprite, use % on the decay factor or on clock)
     if self.dead > 0:
       self.image = self.images[5]
@@ -86,8 +86,8 @@ class Player(Item):
       self.image = self.images[1]
     else:
       self.image = self.images[0]
-      
-  
+
+
   def move_x(self, dist=1):
     #return True on collsion, False otherwise
     if not dist == 0:
@@ -99,7 +99,7 @@ class Player(Item):
           self.rect.x -= tick
           return True
       return False
-    
+
   def move_y(self, dist=1):
     #return True on collsion, False otherwise
     if not dist == 0:
@@ -111,14 +111,14 @@ class Player(Item):
           self.rect.y -= tick
           return True
       return False
-    
+
   def jump_start(self):
     if self.grounded():
       self.jump = constants.JUMP_TIME
-      
+
   def jump_stop(self):
     self.jump = min(self.jump, 1)
-  
+
   def grounded(self):
     if not self.blocks == None:
       self.rect.y += 1
@@ -130,13 +130,9 @@ class Player(Item):
         return False
     else:
       return False
-      
-      
+
+
   def sign(self, num):# For Various math
     if num == 0 or num == None:
       return 0
     return num//abs(num)
-  
-  
-    
-    

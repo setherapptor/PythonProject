@@ -7,7 +7,8 @@ class Block(Item):
     super().__init__(pos=pos, img = p.image.load('Images\\block.png'))
     self.moving = moving
     self.followers = None
-    
+
+
   def update(self):
     #for moving
     moved_y = False
@@ -16,7 +17,7 @@ class Block(Item):
         if not self.followers == None:
             self.rect.x += 2
             self.rect.y -= 2
-            test = p.sprite.spritecollide(self, self.followers, False) # IF COLLISION, test > 
+            test = p.sprite.spritecollide(self, self.followers, False) # IF COLLISION, test >
             self.rect.x -= 2
             self.rect.y += 2
             if len(test) > 0:
@@ -39,7 +40,7 @@ class Block(Item):
         self.rect.x += self.moving[0]
       else:
         self.moving = (-self.moving[0],self.moving[1],self.moving[2],self.moving[3],self.moving[4],self.moving[5])
-        
+
     if self.moving[3] > 0:
       if self.rect.y < self.moving[4]:
         if not self.followers == None:
@@ -76,6 +77,3 @@ class Block(Item):
         self.rect.y += self.moving[3]
       else:
         self.moving = (self.moving[0],self.moving[1],self.moving[2],-self.moving[3],self.moving[4],self.moving[5])
-      
-    
-  
