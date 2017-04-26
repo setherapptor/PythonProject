@@ -78,22 +78,14 @@ class Game():
     if self.player.rect.y > constants.SCREEN_HEIGHT:
         if self.current_room.down != None:
             self.current_room = self.rooms[self.current_room.down]
-<<<<<<< HEAD
             self.current_room.__init__()
         self.player.rect.y = 0
-=======
-        self.player.rect.y = -32
->>>>>>> 1f8c36cc292fd616e5aea1a73a4a9ec283ce170c
     #Player goes too far up
-    if self.player.rect.y < -32:
+    if self.player.rect.y < 0:
         if self.current_room.up != None:
             self.current_room = self.rooms[self.current_room.up]
-<<<<<<< HEAD
             self.current_room.__init__()
         self.player.rect.y = constants.SCREEN_HEIGHT
-=======
-        self.player.rect.y = constants.SCREEN_HEIGHT - 32
->>>>>>> 1f8c36cc292fd616e5aea1a73a4a9ec283ce170c
 
 
     self.blocks = self.current_room.block_list
