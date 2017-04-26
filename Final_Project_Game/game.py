@@ -28,12 +28,6 @@ class Game():
       self.player = Player(pos = (200,200))
       self.sprites.add(self.player)
       self.blocks = self.current_room.block_list
-      #self.blocks.add(Block(pos = (400,300)))
-      #self.blocks.add(Block(pos = (0, 500)))
-      #self.blocks.add(Block(pos = (64, 436)))
-      #self.blocks.add(Block(pos = (100,100),moving = (4,800,0,0,0,0)))
-      #self.blocks.add(Block(pos = (200,200),moving = (0,0,0,3,600,0)))
-      #self.blocks.add(Block(pos = (0,0),moving = (4,800,0,3,600,0)))
       self.paused = False
       for block in self.blocks:
         block.followers = self.sprites
@@ -80,12 +74,12 @@ class Game():
     if self.player.rect.y > constants.SCREEN_HEIGHT:
         if self.current_room.down != None:
             self.current_room = self.rooms[self.current_room.down]
-        self.player.rect.y = 0
+        self.player.rect.y = -32
     #Player goes too far up
-    if self.player.rect.y < 0:
+    if self.player.rect.y < -32:
         if self.current_room.up != None:
             self.current_room = self.rooms[self.current_room.up]
-        self.player.rect.y = constants.SCREEN_HEIGHT
+        self.player.rect.y = constants.SCREEN_HEIGHT - 32
 
 
     self.blocks = self.current_room.block_list
