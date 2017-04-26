@@ -21,6 +21,8 @@ class Game():
       self.rooms.append(room)
       room = Room5()
       self.rooms.append(room)
+      room = Room6()
+      self.rooms.append(room)
       self.current_room = self.rooms[0]
       self.blocks = p.sprite.Group()
       self.blocks = p.sprite.Group()
@@ -63,23 +65,27 @@ class Game():
     if self.player.rect.x > constants.SCREEN_WIDTH - 16:
         if self.current_room.right != None:
             self.current_room = self.rooms[self.current_room.right]
+            self.current_room.__init__()
         self.player.rect.x = -16
         #self.player.rect.y -= 1
     #Player goes too far left
     if self.player.rect.x < -16:
         if self.current_room.left != None:
             self.current_room = self.rooms[self.current_room.left]
+            self.current_room.__init__()
         self.player.rect.x = constants.SCREEN_WIDTH - 16
     #Player goes too far down
     if self.player.rect.y > constants.SCREEN_HEIGHT:
         if self.current_room.down != None:
             self.current_room = self.rooms[self.current_room.down]
-        self.player.rect.y = -32
+            self.current_room.__init__()
+        self.player.rect.y = 0
     #Player goes too far up
-    if self.player.rect.y < -32:
+    if self.player.rect.y < 0:
         if self.current_room.up != None:
             self.current_room = self.rooms[self.current_room.up]
-        self.player.rect.y = constants.SCREEN_HEIGHT - 32
+            self.current_room.__init__()
+        self.player.rect.y = constants.SCREEN_HEIGHT
 
 
     self.blocks = self.current_room.block_list
@@ -93,7 +99,8 @@ class Game():
   def draw_frame(self, screen):
     #Drawing goes here
     if self.paused == False:
-      screen.fill(color.BLACK)
+      #screen.fill(color.BLACK)
+      screen.blit(self.current_room.background, dest = (0,0))
       #Change above line to get background
 
       self.sprites.draw(screen)
