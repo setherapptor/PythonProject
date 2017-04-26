@@ -10,7 +10,6 @@ class Room():
         self.up = None
         self.down = None
         self.block_list = p.sprite.Group()
-        self.enemy_list = p.sprite.Group()
         self.background = None
 
 #Complete
@@ -136,3 +135,12 @@ class Room5(Room):
             if i >= 128 and i <= 576:
                 self.block_list.add(Block(pos = (i, constants.SCREEN_HEIGHT-192)))
             i += 64
+
+class Room6(Room):
+    def __init__(self):
+        super().__init__()
+        self.id = 6
+        self.left = 5
+        self.right = None
+        self.up = None
+        self.down = None

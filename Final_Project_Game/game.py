@@ -21,7 +21,7 @@ class Game():
       self.rooms.append(room)
       room = Room5()
       self.rooms.append(room)
-      self.current_room = self.rooms[0]
+      self.current_room = self.rooms[5]
       self.blocks = p.sprite.Group()
       self.blocks = p.sprite.Group()
       self.sprites = p.sprite.Group()
