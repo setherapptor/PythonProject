@@ -66,16 +66,16 @@ class Game():
   def logic(self):
     #Logic goes here
     #Player goes too far right
-    if self.player.rect.x > constants.SCREEN_WIDTH:
+    if self.player.rect.x > constants.SCREEN_WIDTH - 16:
         if self.current_room.right != None:
             self.current_room = self.rooms[self.current_room.right]
-        self.player.rect.x = 0
+        self.player.rect.x = -16
         #self.player.rect.y -= 1
     #Player goes too far left
-    if self.player.rect.x < 0:
+    if self.player.rect.x < -16:
         if self.current_room.left != None:
             self.current_room = self.rooms[self.current_room.left]
-        self.player.rect.x = constants.SCREEN_WIDTH
+        self.player.rect.x = constants.SCREEN_WIDTH - 16
     #Player goes too far down
     if self.player.rect.y > constants.SCREEN_HEIGHT:
         if self.current_room.down != None:

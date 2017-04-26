@@ -5,11 +5,13 @@ import constants
 class Player(Item):
   #TODO: Make it that if inside a block before moving, move up until okay, may make stairs or slants possible
 
-
-
   def __init__(self, pos=(0,0)):
     self.images = [p.image.load("Images\\stand.png"),p.image.load("Images\\walk.png"),p.image.load("Images\\jump.png"),p.image.load("Images\\fall.png"),p.image.load("Images\\hurt.png"),p.image.load("Images\\dead.png")]#Load all images here
     super().__init__(pos=pos,img=p.image.load("Images\\stand.png"))
+    #Jump sounds
+    self.jump1 = p.mixer.Sound("Sounds\\jump.wav")
+    self.jump2 = p.mixer.Sound("Sounds\\jump2.wav")
+    
     #action decay
     self.fallen = 0
     self.jump = 0
@@ -115,6 +117,10 @@ class Player(Item):
   def jump_start(self):
     if self.grounded():
       self.jump = constants.JUMP_TIME
+      if self.clock % 2 == 0:
+        self.jump1.play()
+      else:
+        self.jump2.play()
 
   def jump_stop(self):
     self.jump = min(self.jump, 1)
