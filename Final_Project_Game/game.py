@@ -21,19 +21,15 @@ class Game():
       self.rooms.append(room)
       room = Room5()
       self.rooms.append(room)
-      self.current_room = self.rooms[5]
+      room = Room6()
+      self.rooms.append(room)
+      self.current_room = self.rooms[2]
       self.blocks = p.sprite.Group()
       self.blocks = p.sprite.Group()
       self.sprites = p.sprite.Group()
       self.player = Player(pos = (200,200))
       self.sprites.add(self.player)
       self.blocks = self.current_room.block_list
-      #self.blocks.add(Block(pos = (400,300)))
-      #self.blocks.add(Block(pos = (0, 500)))
-      #self.blocks.add(Block(pos = (64, 436)))
-      #self.blocks.add(Block(pos = (100,100),moving = (4,800,0,0,0,0)))
-      #self.blocks.add(Block(pos = (200,200),moving = (0,0,0,3,600,0)))
-      #self.blocks.add(Block(pos = (0,0),moving = (4,800,0,3,600,0)))
       self.paused = False
       for block in self.blocks:
         block.followers = self.sprites
@@ -66,25 +62,29 @@ class Game():
   def logic(self):
     #Logic goes here
     #Player goes too far right
-    if self.player.rect.x > constants.SCREEN_WIDTH:
+    if self.player.rect.x > constants.SCREEN_WIDTH - 16:
         if self.current_room.right != None:
             self.current_room = self.rooms[self.current_room.right]
-        self.player.rect.x = 0
+            self.current_room.__init__()
+        self.player.rect.x = -16
         #self.player.rect.y -= 1
     #Player goes too far left
-    if self.player.rect.x < 0:
+    if self.player.rect.x < -16:
         if self.current_room.left != None:
             self.current_room = self.rooms[self.current_room.left]
-        self.player.rect.x = constants.SCREEN_WIDTH
+            self.current_room.__init__()
+        self.player.rect.x = constants.SCREEN_WIDTH - 16
     #Player goes too far down
     if self.player.rect.y > constants.SCREEN_HEIGHT:
         if self.current_room.down != None:
             self.current_room = self.rooms[self.current_room.down]
+            self.current_room.__init__()
         self.player.rect.y = 0
     #Player goes too far up
     if self.player.rect.y < 0:
         if self.current_room.up != None:
             self.current_room = self.rooms[self.current_room.up]
+            self.current_room.__init__()
         self.player.rect.y = constants.SCREEN_HEIGHT
 
 

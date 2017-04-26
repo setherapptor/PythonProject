@@ -10,7 +10,11 @@ class Room():
         self.up = None
         self.down = None
         self.block_list = p.sprite.Group()
+        self.enemy_list = p.sprite.Group()
         self.background = None
+
+    def update(self):
+        self.__init__()
 
 #Complete
 class Room0(Room):
@@ -56,7 +60,7 @@ class Room2(Room):
         self.id = 2
         self.left = 1
         self.right = 3
-        self.up = None
+        self.up = 6
         self.down = None
 
         i = 0
@@ -69,7 +73,7 @@ class Room2(Room):
             if i <= 256 or i >= 448:
                 self.block_list.add(Block(pos = (i, constants.SCREEN_HEIGHT-64)))
             i += 64
-        self.block_list.add(Block(pos = (640,192), moving = (2,640,256,0,0,0)))
+        self.block_list.add(Block(pos = (640,128), moving = (2,640,256,0,0,0)))
         self.block_list.add(Block(pos = (64,384)))
 
 
@@ -136,11 +140,21 @@ class Room5(Room):
                 self.block_list.add(Block(pos = (i, constants.SCREEN_HEIGHT-192)))
             i += 64
 
+#Secret Room
 class Room6(Room):
     def __init__(self):
         super().__init__()
         self.id = 6
-        self.left = 5
+        self.left = None
         self.right = None
         self.up = None
-        self.down = None
+        self.down = 2
+
+        #self.backgroun = something other than None
+        i = 0
+        while i < constants.SCREEN_WIDTH:
+            if i != 320 and i != 384:
+                self.block_list.add(Block(pos = (i, constants.SCREEN_HEIGHT-64)))
+            i += 64
+        self.block_list.add(Block(pos = (320,constants.SCREEN_HEIGHT+64), moving = (0,0,0,2,576,320)))
+        self.block_list.add(Block(pos = (384,constants.SCREEN_HEIGHT+64), moving = (0,0,0,2,576,320)))
