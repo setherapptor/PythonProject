@@ -23,7 +23,7 @@ class Game():
       self.rooms.append(room)
       room = Room6()
       self.rooms.append(room)
-      self.current_room = self.rooms[2]
+      self.current_room = self.rooms[0]
       self.blocks = p.sprite.Group()
       self.blocks = p.sprite.Group()
       self.sprites = p.sprite.Group()
@@ -99,7 +99,8 @@ class Game():
   def draw_frame(self, screen):
     #Drawing goes here
     if self.paused == False:
-      screen.fill(color.BLACK)
+      #screen.fill(color.BLACK)
+      screen.blit(self.current_room.background, dest = (0,0))
       #Change above line to get background
 
       self.sprites.draw(screen)

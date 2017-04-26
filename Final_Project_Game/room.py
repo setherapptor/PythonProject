@@ -11,7 +11,7 @@ class Room():
         self.down = None
         self.block_list = p.sprite.Group()
         self.enemy_list = p.sprite.Group()
-        self.background = None
+        self.background = p.image.load("Images\\default.png")
 
     def update(self):
         self.__init__()
@@ -150,7 +150,8 @@ class Room6(Room):
         self.up = None
         self.down = 2
 
-        #self.backgroun = something other than None
+        #self.background = p.image.load(Images\\secret_room.png)
+        #^Or something to that effect
         i = 0
         while i < constants.SCREEN_WIDTH:
             if i != 320 and i != 384:
@@ -158,3 +159,12 @@ class Room6(Room):
             i += 64
         self.block_list.add(Block(pos = (320,constants.SCREEN_HEIGHT+64), moving = (0,0,0,2,576,320)))
         self.block_list.add(Block(pos = (384,constants.SCREEN_HEIGHT+64), moving = (0,0,0,2,576,320)))
+
+class Room7(Room):
+    def __init__(self):
+        super().__init__()
+        self.id = 7
+        self.left = 5
+        self.right = None
+        self.up = None
+        self.down = None
