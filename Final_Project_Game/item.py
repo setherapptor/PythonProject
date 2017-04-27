@@ -1,3 +1,5 @@
+#item.py
+#Base class for player and block to inherit from p.sprite.Sprite
 import pygame as p
 
 class Item(p.sprite.Sprite):
@@ -8,5 +10,3 @@ class Item(p.sprite.Sprite):
     self.rect = self.image.get_rect()
     self.rect.x = pos[0]
     self.rect.y = pos[1]
-    
-    

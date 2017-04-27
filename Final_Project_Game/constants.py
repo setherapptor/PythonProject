@@ -1,4 +1,5 @@
-#Random constants go here
+#constants.py
+#contains constants used for various calculations
 
 TERMINAL_VELOCITY = 20
 SCREEN_WIDTH = 768

@@ -1,17 +1,22 @@
+#player.py
+#Class for the player's character
+
 import pygame as p
 from item import Item
 import constants
+import color
 
 class Player(Item):
-  #TODO: Make it that if inside a block before moving, move up until okay, may make stairs or slants possible
 
   def __init__(self, pos=(0,0)):
     self.images = [p.image.load("Images\\stand.png"),p.image.load("Images\\walk.png"),p.image.load("Images\\jump.png"),p.image.load("Images\\fall.png"),p.image.load("Images\\hurt.png"),p.image.load("Images\\dead.png")]#Load all images here
     super().__init__(pos=pos,img=p.image.load("Images\\stand.png"))
+    for im in self.images:
+        im.set_colorkey(color.BLACK)
     #Jump sounds
     self.jump1 = p.mixer.Sound("Sounds\\jump.wav")
     self.jump2 = p.mixer.Sound("Sounds\\jump2.wav")
-    
+
     #action decay
     self.fallen = 0
     self.jump = 0
@@ -43,7 +48,6 @@ class Player(Item):
     #Falling check
     if not self.grounded() and self.jump == 0:#IF not grounded and not mid jump
       if(self.clock % 3 == 0 or self.yvel == 0):#Calculate gravity
-        #self.move_y(dist=min(constants.TERMINAL_VELOCITY, self.yvel + 1))
         self.yvel = min(constants.TERMINAL_VELOCITY, self.yvel + 1)
     else:
       self.yvel = min(0, self.yvel)#If falling, stop. Else: keep going(up)

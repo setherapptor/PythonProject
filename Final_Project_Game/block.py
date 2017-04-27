@@ -1,3 +1,5 @@
+#block.py
+#Contains the block class used for the walls, floorws, etc.
 import pygame as p
 from item import Item
 
